@@ -1,7 +1,7 @@
 import { InterceptorByEnum } from "../enums/interceptor-by.enum";
-import { IResponseInterceptorOptions, IRequestInterceptorOptions } from "../interfaces/interceptor-options.interface";
+import { IResponseInterceptor, IRequestInterceptor } from "../interfaces/interceptor-options.interface";
 
-export const validateInterceptorOptions = (options: IResponseInterceptorOptions | IRequestInterceptorOptions) => {
+export const validateInterceptorOptions = (options: IResponseInterceptor | IRequestInterceptor) => {
     const isByPathAndExactPath = options.by.includes(InterceptorByEnum.PATH) && options.by.includes(InterceptorByEnum.EXACT_PATH);
     const hasPathButIsNotByPathOrExactPath = options.path && !options.by.includes(InterceptorByEnum.PATH) && !options.by.includes(InterceptorByEnum.EXACT_PATH);
     const hasMethodButIsNotByMethod = !!options.methods && !options.by.includes(InterceptorByEnum.METHOD)

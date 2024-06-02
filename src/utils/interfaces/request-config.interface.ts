@@ -1,9 +1,9 @@
-import { IHeaderRequest } from "lightie-request/src/utils/interfaces/header.interface";
+import { IRequestHeaders } from "../interfaces/headers.interface";
 import { HttpMethodsEnum } from "../enums/http-methods.enum";
 
 export interface IRequestConfig {
     url: string;
     path: string;
-    headers?: IHeaderRequest;
+    headers?: IRequestHeaders;
     method: HttpMethodsEnum;
   }
