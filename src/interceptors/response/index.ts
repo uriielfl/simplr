@@ -1,21 +1,21 @@
 import { HttpMethodsEnum } from '../../utils/enums/http-methods.enum';
 import { InterceptorByEnum } from '../../utils/enums/interceptor-by.enum';
 import { validateInterceptorOptions } from '../../utils/helpers/validate-interceptor';
-import { IResponseInterceptorOptions } from '../../utils/interfaces/interceptor-options.interface';
+import { IResponseInterceptor } from '../../utils/interfaces/interceptor-options.interface';
 import { Cache } from '../../handlers/cache.handler';
 
 export class ResponseInterceptor {
-  private interceptors: IResponseInterceptorOptions[] = [];
+  private interceptors: IResponseInterceptor[] = [];
   private cache = new Cache();
   constructor() {}
 
-  add(interceptor: IResponseInterceptorOptions) {
+  add(interceptor: IResponseInterceptor) {
     validateInterceptorOptions(interceptor);
     this.interceptors.push(interceptor);
   }
 
   private matchPath(
-    interceptor: IResponseInterceptorOptions,
+    interceptor: IResponseInterceptor,
     path: string,
   ): boolean {
     if (!interceptor.path) {
@@ -61,17 +61,25 @@ export class ResponseInterceptor {
     method: HttpMethodsEnum,
   ) {
     const interceptor = this.findInterceptors(path, method);
-    const cacheKey = `/${path}:${method}`;
-    const cacheData = await this.cache.get(cacheKey);
-    if(interceptor?.cache?.cacheResponse) {
-      if(!!cacheData) {
-        return cacheData;
-      } else {
-        const response = await interceptor?.interception(await req());
-        await this.cache.set(cacheKey, response, interceptor.cache.expiresAt ?? 0);
-        return response;
+    if (!!interceptor) {
+      if (interceptor?.cache?.cacheResponse) {
+        const cacheKey = `/${path}:${method}`;
+        const cacheData = await this.cache.get(cacheKey);
+        if (!!cacheData) {
+          return cacheData;
+        } else {
+          const response = await interceptor?.interception(await req());
+          await this.cache.set(
+            cacheKey,
+            response,
+            interceptor.cache.expiresAt ?? 0,
+          );
+          return response;
+        }
       }
+
+      return await interceptor?.interception(await req());
     }
-    return await interceptor?.interception(await req());
+    return await req();
   }
 }

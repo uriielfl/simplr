@@ -1,20 +1,19 @@
 import { HttpMethodsEnum } from "../enums/http-methods.enum";
 import { InterceptorByEnum } from "../enums/interceptor-by.enum";
 import { ICacheOptions } from "./cache-options.interface";
-import { IRequestHeaders } from "./headers.interface";
-import { IRequestOptions } from "./request-options.interface";
+import { IRequestConfig } from "./request-config.interface";
 
-export interface IRequestInterceptorOptions {
+export interface IRequestInterceptor {
     by: InterceptorByEnum[];
-    interception: (params: IRequestOptions) => any | void;
+    interception: (config: IRequestConfig) => any;
     path?: string;
     methods?: HttpMethodsEnum[];
     params?: string[];
 }
 
-export interface IResponseInterceptorOptions {
+export interface IResponseInterceptor {
     by: InterceptorByEnum[];
-    interception: (params: Promise<any>) => any;
+    interception: (response: Promise<any>) => any;
     path?: string;
     methods?: HttpMethodsEnum[];
     params?: string[];
