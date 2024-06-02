@@ -1,4 +1,5 @@
 import { SimplrError } from '../../handlers/error.handler';
+import { SimplrResponse } from '../../handlers/response.handler';
 import { HttpMethodsEnum } from '../../utils/enums/http-methods.enum';
 import { getStatusCodeGroup } from '../../utils/helpers/get-status-code-group';
 import { IRequestOptions } from '../../utils/interfaces/request-options.interface';
@@ -11,7 +12,7 @@ export class Patch  {
     public options?: IRequestOptions,
   ) {
   }
-  async runIt(): Promise<IResponse> {
+  async runIt(): Promise<SimplrResponse> {
     const fullUrl = `${this.url}/${this.path}`;
     const BODY = JSON.stringify(this.options?.body);
 
@@ -31,12 +32,8 @@ export class Patch  {
 
       throw new SimplrError(response.status, response.statusText, errorData);
     }
-
-    return {
-      status: response.status,
-      data: JSON.parse(await response.text()),
-      statusText: response.statusText,
-      statusGroup: getStatusCodeGroup(response.status),
-    };
+    
+    const simplrResponse = await SimplrResponse.fromResponse(response);
+    return simplrResponse
   }
 }

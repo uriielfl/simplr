@@ -1,19 +1,19 @@
 import { HttpMethodsEnum } from '../../utils/enums/http-methods.enum';
 import { InterceptorByEnum } from '../../utils/enums/interceptor-by.enum';
 import { validateInterceptorOptions } from '../../utils/helpers/validate-interceptor';
-import { IRequestInterceptorOptions } from '../../utils/interfaces/interceptor-options.interface';
-import { IRequestOptions } from '../../utils/interfaces/request-options.interface';
+import { IRequestInterceptor } from '../../utils/interfaces/interceptor-options.interface';
+import { IRequestConfig } from '../../utils/interfaces/request-config.interface';
 
 export class RequestInterceptor {
-  private interceptors: IRequestInterceptorOptions[] = [];
+  private interceptors: IRequestInterceptor[] = [];
   constructor() {}
 
-  add(interceptor: IRequestInterceptorOptions) {
+  add(interceptor: IRequestInterceptor) {
     validateInterceptorOptions(interceptor);
     this.interceptors.push(interceptor);
   }
 
-  private matchPath(interceptor: IRequestInterceptorOptions, path: string): boolean {
+  private matchPath(interceptor: IRequestInterceptor, path: string): boolean {
     if (!interceptor.path) {
       return false;
     }
@@ -43,6 +43,7 @@ export class RequestInterceptor {
       if (matchesPath) {
         return true;
       }
+      
       if(matchesMethod) {
         return true;
       }
@@ -51,8 +52,8 @@ export class RequestInterceptor {
     });
   }
 
-  runInterceptor(req: IRequestOptions, path: string, method: HttpMethodsEnum) {
-    const interceptor = this.findInterceptors(path, method);
-    return interceptor?.interception(req);
+  runInterceptor(config: IRequestConfig): void {
+    const interceptor = this.findInterceptors(config.path, config.method);
+    return interceptor?.interception(config);
   }
 }
