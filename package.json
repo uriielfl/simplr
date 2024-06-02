@@ -7,12 +7,12 @@
       "request",
       "fetch",
       "light",
-      "lightie"
+      "simplr"
     ],
     "main": "dist/index.js",
     "repository": {
       "type": "git",
-      "url": "https://github.com/uriielfl/lightie-request.git"
+      "url": "https://github.com/uriielfl/simplr.git"
     },
     "scripts": {
       "start": "npx tsc && node dist/src/index.js",
