@@ -1,8 +1,7 @@
 import { HttpMethodsEnum } from '../../utils/enums/http-methods.enum';
-import { IResponse } from '../../utils/interfaces/response.interface';
 import { IRequestOptions } from '../../utils/interfaces/request-options.interface';
 import { SimplrError } from '../../handlers/error.handler';
-import { getStatusCodeGroup } from '../../utils/helpers/get-status-code-group';
+import { SimplrResponse } from '../../handlers/response.handler';
 
 export class Put  {
   constructor(
@@ -11,7 +10,7 @@ export class Put  {
     public options?: IRequestOptions,
   ) {
   }
-  async runIt(): Promise<IResponse> {
+  async runIt(): Promise<SimplrResponse> {
     const fullUrl = `${this.url}/${this.path}`;
     const BODY = JSON.stringify(this.options?.body);
 
@@ -31,12 +30,8 @@ export class Put  {
 
       throw new SimplrError(response.status, response.statusText, errorData);
     }
-
-    return {
-      status: response.status,
-      data: JSON.parse(await response.text()),
-      statusText: response.statusText,
-      statusGroup: getStatusCodeGroup(response.status),
-    };
+  
+    const simplrResponse = await SimplrResponse.fromResponse(response);
+    return simplrResponse
   }
 }

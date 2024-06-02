@@ -1,8 +1,7 @@
 import { SimplrError } from '../../handlers/error.handler';
+import { SimplrResponse } from '../../handlers/response.handler';
 import { HttpMethodsEnum } from '../../utils/enums/http-methods.enum';
-import { getStatusCodeGroup } from '../../utils/helpers/get-status-code-group';
 import { IRequestOptions } from '../../utils/interfaces/request-options.interface';
-import { IResponse } from '../../utils/interfaces/response.interface';
 
 export class Delete {
   constructor(
@@ -10,7 +9,7 @@ export class Delete {
     public path?: string,
     public options?: IRequestOptions,
   ) {}
-  async runIt(): Promise<IResponse> {
+  async runIt(): Promise<SimplrResponse> {
     const fullUrl = `${this.url}/${this.path}`;
     const HEADER = {
       'Content-Type': 'application/json',
@@ -28,11 +27,7 @@ export class Delete {
       throw new SimplrError(response.status, response.statusText, errorData);
     }
 
-    return {
-      status: response.status,
-      statusText: response.statusText,
-      data: JSON.parse(await response.text()),
-      statusGroup: getStatusCodeGroup(response.status),
-    };
+    const simplrResponse = await SimplrResponse.fromResponse(response);
+    return simplrResponse
   }
 }
