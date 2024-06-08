@@ -1,4 +1,4 @@
-import { StatusCodeGroupEnum } from "../enums/status-code-groups.enum";
+import { StatusCodeGroupEnum } from "@/utils/enums/status-code-groups.enum";
 
 export interface IResponse {
   status: number;

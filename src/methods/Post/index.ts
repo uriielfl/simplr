@@ -1,7 +1,7 @@
-import { HttpMethodsEnum } from '../../utils/enums/http-methods.enum';
-import { SimplrError } from '../../handlers/error.handler';
-import { IRequestOptions } from '../../utils/interfaces/request-options.interface';
-import { SimplrResponse } from '../../handlers/response.handler';
+import { HttpMethodsEnum } from '@/utils/enums/http-methods.enum';
+import { SimplrError } from '@/handlers/error.handler';
+import { IRequestOptions } from '@/utils/interfaces/request-options.interface';
+import { SimplrResponse } from '@/handlers/response.handler';
 
 export class Post  {
   constructor(

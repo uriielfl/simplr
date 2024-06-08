@@ -1,9 +1,11 @@
-import { getExpirationDate } from '../utils/helpers/get-expiration-date';
+import { getExpirationDate } from '@/utils/helpers/get-expiration-date';
+
 const STORAGE_INDEX = 'simplr'
+
 export class Cache {
   constructor() {}
 
-  set = async (key: string, value: any, ttl: number) => {
+  set = async (key: string, value: any, ttl = 5000) => {
     const cacheStorage = await caches.open(STORAGE_INDEX);
     const expirationDate = getExpirationDate(ttl);
     const dataToCache = JSON.stringify({ value, expirationDate });

@@ -1,5 +1,5 @@
-import { secureUrl } from '../../utils/helpers/secure-url';
-import { IRequestOptions } from '../../utils/interfaces/request-options.interface';
+import { secureUrl } from '@/utils/helpers/secure-url';
+import { IRequestOptions } from '@/utils/interfaces/request-options.interface';
 
 export class Base {
   constructor(

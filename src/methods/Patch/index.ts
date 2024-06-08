@@ -1,9 +1,7 @@
-import { SimplrError } from '../../handlers/error.handler';
-import { SimplrResponse } from '../../handlers/response.handler';
-import { HttpMethodsEnum } from '../../utils/enums/http-methods.enum';
-import { getStatusCodeGroup } from '../../utils/helpers/get-status-code-group';
-import { IRequestOptions } from '../../utils/interfaces/request-options.interface';
-import { IResponse } from '../../utils/interfaces/response.interface';
+import { SimplrError } from '@/handlers/error.handler';
+import { SimplrResponse } from '@/handlers/response.handler';
+import { HttpMethodsEnum } from '@/utils/enums/http-methods.enum';
+import { IRequestOptions } from '@/utils/interfaces/request-options.interface';
 
 export class Patch  {
   constructor(

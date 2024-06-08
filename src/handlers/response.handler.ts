@@ -1,4 +1,4 @@
-import { getStatusCodeGroup } from "../utils/helpers/get-status-code-group";
+import { getStatusCodeGroup } from "@/utils/helpers/get-status-code-group";
 
 export class SimplrResponse {
     status: number;
