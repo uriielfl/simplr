@@ -3,41 +3,41 @@
     "version": "1.0.0",
     "description": "make requests client-side cacheable requests with ease",
     "keywords": [
-      "http",
-      "request",
-      "fetch",
-      "light",
-      "simplr"
+        "http",
+        "request",
+        "fetch",
+        "light",
+        "simplr"
     ],
     "main": "dist/index.js",
     "repository": {
-      "type": "git",
-      "url": "https://github.com/uriielfl/simplr.git"
+        "type": "git",
+        "url": "https://github.com/uriielfl/simplr.git"
     },
     "scripts": {
-      "start": "npx tsc && node dist/src/index.js",
-      "test": "jest",
-      "test:coverage": "jest --coverage",
-      "build": "tsc",
-      "minify": "node minify.js"
+        "start": "npx tsc && node dist/src/index.js",
+        "test": "jest",
+        "test:coverage": "jest --coverage",
+        "build": "tsc",
+        "minify": "node minify.js"
     },
     "author": "Uriel Francisco Libano",
     "license": "ISC",
     "files": [
-      "dist"
+        "dist"
     ],
     "devDependencies": {
-      "@types/jest": "^29.5.12",
-      "glob": "^10.3.12",
-      "jest": "^29.7.0",
-      "nock": "^13.5.4",
-      "terser": "^5.31.0",
-      "ts-jest": "^29.1.2",
-      "typescript": "^5.4.5"
+        "@trivago/prettier-plugin-sort-imports": "^4.3.0",
+        "@types/jest": "^29.5.12",
+        "glob": "^10.3.12",
+        "jest": "^29.7.0",
+        "nock": "^13.5.4",
+        "terser": "^5.31.0",
+        "ts-jest": "^29.1.4",
+        "typescript": "^5.4.5"
     },
     "dependencies": {
-      "@types/node": "^20.12.7",
-      "isomorphic-fetch": "^3.0.0"
+        "@types/node": "^20.12.7",
+        "isomorphic-fetch": "^3.0.0"
     }
-  }
-  
+}

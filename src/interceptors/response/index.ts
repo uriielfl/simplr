@@ -1,8 +1,8 @@
-import { HttpMethodsEnum } from '../../utils/enums/http-methods.enum';
-import { InterceptorByEnum } from '../../utils/enums/interceptor-by.enum';
-import { validateInterceptorOptions } from '../../utils/helpers/validate-interceptor';
-import { IResponseInterceptor } from '../../utils/interfaces/interceptor-options.interface';
-import { Cache } from '../../handlers/cache.handler';
+import { HttpMethodsEnum } from '@/utils/enums/http-methods.enum';
+import { InterceptorByEnum } from '@/utils/enums/interceptor-by.enum';
+import { validateInterceptorOptions } from '@/utils/helpers/validate-interceptor';
+import { IResponseInterceptor } from '@/utils/interfaces/interceptor-options.interface';
+import { Cache } from '@/handlers/cache.handler';
 
 export class ResponseInterceptor {
   private interceptors: IResponseInterceptor[] = [];
@@ -14,44 +14,58 @@ export class ResponseInterceptor {
     this.interceptors.push(interceptor);
   }
 
-  private matchPath(
-    interceptor: IResponseInterceptor,
-    path: string,
-  ): boolean {
-    if (!interceptor.path) {
-      return false;
-    }
-
+  private matchPath(interceptor: IResponseInterceptor, path: string): boolean {
     if (interceptor.by.includes(InterceptorByEnum.EXACT_PATH)) {
       return interceptor.path === path;
     }
-
     if (interceptor.by.includes(InterceptorByEnum.PATH)) {
-      const regexPath = new RegExp(
-        '^' + interceptor.path.replace(/\{.*?\}/g, '.*') + '$',
-      );
-      return regexPath.test(path);
+      let regexPath = '^' + interceptor.path + '$';
+      if (interceptor.params) {
+        for (const param of interceptor.params) {
+          regexPath = regexPath.replace(`{${param}}`, '.*');
+        }
+      }
+      const regex = new RegExp(regexPath);
+      return regex.test(path);
     }
 
     return false;
   }
-
   private findInterceptors(path: string, method: HttpMethodsEnum) {
     return this.interceptors.find((interceptor) => {
       const matchesMethod =
         interceptor.methods?.includes(method) &&
         interceptor.by.includes(InterceptorByEnum.METHOD);
       const matchesPath = this.matchPath(interceptor, path);
-      if (matchesMethod && matchesPath) {
-        return true;
+      const shouldMatchMethod =
+        interceptor.by.length === 1 &&
+        interceptor.by[0] === InterceptorByEnum.METHOD;
+      const shouldMatchPath =
+        interceptor.by.length === 1 &&
+        interceptor.by[0] === InterceptorByEnum.PATH;
+      const shouldMatchExactPath =
+        interceptor.by.length === 1 &&
+        interceptor.by[0] === InterceptorByEnum.EXACT_PATH;
+      const shouldMatchMethodAndPath =
+        interceptor.by.length === 2 &&
+        interceptor.by.includes(InterceptorByEnum.METHOD) &&
+        (interceptor.by.includes(InterceptorByEnum.PATH) ||
+          interceptor.by.includes(InterceptorByEnum.EXACT_PATH));
+      if (shouldMatchMethodAndPath) {
+        return matchesMethod && matchesPath;
       }
-      if (matchesPath) {
-        return true;
+
+      if (shouldMatchMethod) {
+        return matchesMethod;
       }
-      if (matchesMethod) {
-        return true;
+
+      if (shouldMatchPath) {
+        return matchesPath;
       }
-      return false;
+
+      if (shouldMatchExactPath) {
+        return matchesPath;
+      }
     });
   }
 
@@ -62,23 +76,26 @@ export class ResponseInterceptor {
   ) {
     const interceptor = this.findInterceptors(path, method);
     if (!!interceptor) {
-      if (interceptor?.cache?.cacheResponse) {
+      if (interceptor.cache?.cacheResponse) {
         const cacheKey = `/${path}:${method}`;
         const cacheData = await this.cache.get(cacheKey);
         if (!!cacheData) {
           return cacheData;
         } else {
-          const response = await interceptor?.interception(await req());
-          await this.cache.set(
-            cacheKey,
-            response,
-            interceptor.cache.expiresAt ?? 0,
-          );
-          return response;
+          if(interceptor.interception) {
+            const response = await interceptor.interception(await req());
+            await this.cache.set(
+              cacheKey,
+              response,
+              interceptor.cache.expiresAt,
+            );
+            return response;
+          }
         }
       }
-
-      return await interceptor?.interception(await req());
+      if(interceptor.interception) {
+        return await interceptor.interception(await req());
+      }
     }
     return await req();
   }

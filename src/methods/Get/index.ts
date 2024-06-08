@@ -1,8 +1,8 @@
-import { SimplrError } from '../../handlers/error.handler';
-import { SimplrResponse } from '../../handlers/response.handler';
-import { HttpMethodsEnum } from '../../utils/enums/http-methods.enum';
-import { IRequestOptions } from '../../utils/interfaces/request-options.interface';
-import { Base } from '../Base';
+import { SimplrError } from '@/handlers/error.handler';
+import { SimplrResponse } from '@/handlers/response.handler';
+import { HttpMethodsEnum } from '@/utils/enums/http-methods.enum';
+import { IRequestOptions } from '@/utils/interfaces/request-options.interface';
+import { Base } from '@/methods/Base';
 
 export class Get {
   constructor(

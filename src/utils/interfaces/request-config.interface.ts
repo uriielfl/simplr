@@ -1,8 +1,7 @@
-import { IRequestHeaders } from "../interfaces/headers.interface";
-import { HttpMethodsEnum } from "../enums/http-methods.enum";
+import { IRequestHeaders } from "@/utils/interfaces/headers.interface";
+import { HttpMethodsEnum } from "@/utils/enums/http-methods.enum";
 
 export interface IRequestConfig {
-    url: string;
     path: string;
     headers?: IRequestHeaders;
     method: HttpMethodsEnum;

@@ -1,4 +1,4 @@
-import { StatusTextEnum } from "../utils/enums/status-text.enum"; 
+import { StatusTextEnum } from "@/utils/enums/status-text.enum"; 
 
 export class SimplrError {
   public statusText: string;
