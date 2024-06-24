@@ -1,8 +1,8 @@
-import { InterceptorByEnum } from '@/utils/enums/interceptor-by.enum';
+import { InterceptorByEnum } from '../../utils/enums/interceptor-by.enum';
 import {
-  IResponseInterceptor,
   IRequestInterceptor,
-} from '@/utils/interfaces/interceptor-options.interface';
+  IResponseInterceptor,
+} from '../../utils/interfaces/interceptor-options.interface';
 
 export const validateInterceptorOptions = (
   options: IResponseInterceptor | IRequestInterceptor,

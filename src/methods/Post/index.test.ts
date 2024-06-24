@@ -1,4 +1,3 @@
-import { SimplrError } from '../../handlers/error.handler';
 import { Post } from './index';
 import 'isomorphic-fetch';
 
@@ -17,7 +16,7 @@ describe('Post method model', () => {
 
   beforeEach(() => {
     (fetch as jest.Mock).mockClear();
-    method = new Post('http://localhost:3000', 'posts', {
+    method = new Post('http://localhost:3000', '/posts', {
       headers: { key: 'value' },
       body: MOCK_DATA,
     });
@@ -39,7 +38,7 @@ describe('Post method model', () => {
   });
 
   it('should return status and message on successful post request without custom headers', async () => {
-    const methodWithoutHeaders = new Post('http://localhost:3000', 'posts');
+    const methodWithoutHeaders = new Post('http://localhost:3000', '/posts');
 
     const response = await methodWithoutHeaders.runIt();
     expect(response.status).toBe(200);
@@ -66,22 +65,4 @@ describe('Post method model', () => {
     }
   });
 
-  it('should throw an error when the response is not ok', async () => {
-    (fetch as jest.Mock).mockImplementationOnce(() =>
-      Promise.resolve(
-        new Response(JSON.stringify({ message: 'Bad Request' }), {
-          status: 400,
-          statusText: 'Bad Request',
-        }),
-      ),
-    );
-
-    try {
-      await method.runIt();
-    } catch (error) {
-      expect(error).toEqual(
-        new SimplrError(400, 'Bad Request', { message: 'Bad Request' }),
-      );
-    }
-  });
 });

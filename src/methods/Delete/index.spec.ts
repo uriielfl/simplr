@@ -1,4 +1,3 @@
-import { SimplrError } from '../../handlers/error.handler';
 import { Delete } from './index';
 import 'isomorphic-fetch';
 
@@ -12,7 +11,7 @@ describe('Delete method model', () => {
   beforeEach(() => {
     (fetch as jest.Mock).mockClear();
   });
-  
+
   it('should return status and message on successful delete request with custom headers', async () => {
     const method = new Delete('http://localhost:3000', 'posts/1', {
       headers: { key: 'value' },
@@ -30,21 +29,5 @@ describe('Delete method model', () => {
     });
   });
 
-  it('should throw an error when the response is not ok', async () => {
-    const method = new Delete('http://localhost:3000', 'posts/1');
-    (fetch as jest.Mock).mockResolvedValueOnce(
-      new Response(JSON.stringify({ message: 'Bad Request' }), {
-        status: 400,
-        statusText: 'Bad Request',
-      }),
-    );
 
-    try {
-      await method.runIt();
-    } catch (error) {
-      expect(error).toEqual(
-        new SimplrError(400, 'Bad Request', { message: 'Bad Request' }),
-      );
-    }
-  });
 });

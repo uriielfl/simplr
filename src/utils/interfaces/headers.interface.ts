@@ -1,5 +1,5 @@
 export interface IResponseHeaders {
-    [key: string]: string | undefined;
+  [key: string]: string | undefined;
   'Access-Control-Allow-Origin'?: string;
   Connection?: string;
   'Content-Encoding'?: string;
@@ -19,7 +19,7 @@ export interface IResponseHeaders {
 }
 
 export interface IRequestHeaders {
- [key: string]: string | undefined;
+  [key: string]: string | undefined;
   Host?: string;
   'User-Agent'?: string;
   Accept?: string;

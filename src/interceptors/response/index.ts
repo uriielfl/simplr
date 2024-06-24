@@ -1,12 +1,11 @@
-import { HttpMethodsEnum } from '@/utils/enums/http-methods.enum';
-import { InterceptorByEnum } from '@/utils/enums/interceptor-by.enum';
-import { validateInterceptorOptions } from '@/utils/helpers/validate-interceptor';
-import { IResponseInterceptor } from '@/utils/interfaces/interceptor-options.interface';
-import { Cache } from '@/handlers/cache.handler';
+import { HttpMethodsEnum } from '../../utils/enums/http-methods.enum';
+import { InterceptorByEnum } from '../../utils/enums/interceptor-by.enum';
+import { validateInterceptorOptions } from '../../utils/helpers/validate-interceptor';
+import { IResponseInterceptor } from '../../utils/interfaces/interceptor-options.interface';
 
 export class ResponseInterceptor {
   private interceptors: IResponseInterceptor[] = [];
-  private cache = new Cache();
+
   constructor() {}
 
   add(interceptor: IResponseInterceptor) {
@@ -76,24 +75,7 @@ export class ResponseInterceptor {
   ) {
     const interceptor = this.findInterceptors(path, method);
     if (!!interceptor) {
-      if (interceptor.cache?.cacheResponse) {
-        const cacheKey = `/${path}:${method}`;
-        const cacheData = await this.cache.get(cacheKey);
-        if (!!cacheData) {
-          return cacheData;
-        } else {
-          if(interceptor.interception) {
-            const response = await interceptor.interception(await req());
-            await this.cache.set(
-              cacheKey,
-              response,
-              interceptor.cache.expiresAt,
-            );
-            return response;
-          }
-        }
-      }
-      if(interceptor.interception) {
+      if (interceptor.interception) {
         return await interceptor.interception(await req());
       }
     }

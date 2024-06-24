@@ -4,7 +4,7 @@ describe('Secure URL helper', () => {
   it('should secure URL', () => {
     const url = 'myurl.com';
     const path = 'path';
-    const { URL, PATH } = secureUrl(url, path);
+    const { URL } = secureUrl(url, path);
     expect(URL).toBe('http://myurl.com');
   });
 
@@ -17,7 +17,12 @@ describe('Secure URL helper', () => {
 
   it('should slice url with it ends with a "/"', () => {
     const url = 'myurl.com/';
-    const { URL } = secureUrl(url);
+    const { URL } = secureUrl(url, '');
     expect(URL).toBe('http://myurl.com');
   });
+  it('should not change protocol if it is already secure', () => {
+    const url = 'https://myurl.com';
+    const { URL } = secureUrl(url, '');
+    expect(URL).toBe(url);
+  })
 });

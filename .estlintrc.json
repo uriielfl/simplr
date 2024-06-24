@@ -1,0 +1,8 @@
+{
+    "rules": {
+      "no-unused-vars": "warn",
+      "import/no-unused-modules": [1, {"unusedExports": true}],
+      "import/no-unresolved": "off"
+    },
+    "plugins": ["import"]
+  }

@@ -1,30 +1,12 @@
-import { ResponseInterceptor } from './index';
 import { HttpMethodsEnum } from '../../utils/enums/http-methods.enum';
 import { InterceptorByEnum } from '../../utils/enums/interceptor-by.enum';
-import { Cache } from '../../handlers/cache.handler';
-
-const mockCache = {
-  put: jest.fn(),
-  match: jest.fn(),
-  delete: jest.fn(),
-};
-
-global.caches = {
-  open: jest.fn().mockResolvedValue(mockCache),
-  delete: jest.fn(),
-  has: jest.fn(),
-  keys: jest.fn(),
-  match: jest.fn(),
-};
+import { ResponseInterceptor } from './index';
 
 describe('ResponseInterceptor', () => {
   let responseInterceptor: ResponseInterceptor;
-  let cache: Cache;
 
-  
   beforeEach(() => {
     responseInterceptor = new ResponseInterceptor();
-    cache = new Cache();
   });
 
   it('should run the correct interceptor if method matchs', async () => {
@@ -195,7 +177,6 @@ describe('ResponseInterceptor', () => {
     interceptor.add({
       path: '/test',
       by: [InterceptorByEnum.EXACT_PATH],
-      cache: { cacheResponse: true },
       interception: async (req) => ({ data: 'intercepted' }),
     });
 
@@ -205,37 +186,6 @@ describe('ResponseInterceptor', () => {
       HttpMethodsEnum.GET,
     );
 
-    expect(result).toEqual({ data: 'intercepted' }); 
-  });
- 
-  test('should return cache data', async () => {
-    const interceptor = new ResponseInterceptor();
-    interceptor.add({
-      path: 'test',
-      by: [InterceptorByEnum.EXACT_PATH],
-      cache: { cacheResponse: true },
-      interception: (req) => ({ data: 'intercepted' }),
-    });
-    console.log(interceptor)
-    const value = { data: 'intercepted' };
-    mockCache.match.mockResolvedValueOnce({
-      ok: true,
-      json: async () => ({ value, expirationDate: Date.now() + 1000 }),
-    });
-  
-    const req =  jest.fn().mockResolvedValue({ data: 'data' });
-    const result = await interceptor.runInterceptor(
-      req,
-      'test',
-      HttpMethodsEnum.GET,
-    );
-
     expect(result).toEqual({ data: 'intercepted' });
-    const result2 = await interceptor.runInterceptor(
-      req,
-      '/test',
-      HttpMethodsEnum.GET,
-    );
-    expect(req).toHaveBeenCalledTimes(1);
   });
 });
