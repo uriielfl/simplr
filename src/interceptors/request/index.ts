@@ -1,8 +1,8 @@
-import { HttpMethodsEnum } from '@/utils/enums/http-methods.enum';
-import { InterceptorByEnum } from '@/utils/enums/interceptor-by.enum';
-import { validateInterceptorOptions } from '@/utils/helpers/validate-interceptor';
-import { IRequestInterceptor } from '@/utils/interfaces/interceptor-options.interface';
-import { IRequestConfig } from '@/utils/interfaces/request-config.interface';
+import { HttpMethodsEnum } from '../../utils/enums/http-methods.enum';
+import { InterceptorByEnum } from '../../utils/enums/interceptor-by.enum';
+import { validateInterceptorOptions } from '../../utils/helpers/validate-interceptor';
+import { IRequestInterceptor } from '../../utils/interfaces/interceptor-options.interface';
+import { IRequestConfig } from '../../utils/interfaces/request-config.interface';
 
 export class RequestInterceptor {
   private interceptors: IRequestInterceptor[] = [];

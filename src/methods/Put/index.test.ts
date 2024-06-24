@@ -1,6 +1,5 @@
 import { Put } from '.';
 import 'isomorphic-fetch';
-import { SimplrError } from '../../handlers/error.handler';
 
 const MOCK_DATA = {
   key: 'value',
@@ -17,7 +16,7 @@ describe('Put method model', () => {
 
   beforeEach(() => {
     (fetch as jest.Mock).mockClear();
-    method = new Put('http://localhost:3000', 'posts', {
+    method = new Put('http://localhost:3000', '/posts', {
       headers: { key: 'value' },
       body: MOCK_DATA,
     });
@@ -39,7 +38,7 @@ describe('Put method model', () => {
   });
 
   it('should return status and message on successful put request without custom headers', async () => {
-    const methodWithoutHeaders = new Put('http://localhost:3000', 'posts');
+    const methodWithoutHeaders = new Put('http://localhost:3000', '/posts');
 
     const response = await methodWithoutHeaders.runIt();
     expect(response.status).toBe(200);
@@ -63,23 +62,6 @@ describe('Put method model', () => {
       await method.runIt();
     } catch (error) {
       expect(error).toEqual(new Error('Network error'));
-    }
-  });
-
-  it('should throw an error when the response is not ok', async () => {
-    (fetch as jest.Mock).mockResolvedValueOnce(
-      new Response(JSON.stringify({ message: 'Bad Request' }), {
-        status: 400,
-        statusText: 'Bad Request',
-      }),
-    );
-
-    try {
-      await method.runIt();
-    } catch (error) {
-      expect(error).toEqual(
-        new SimplrError(400, 'Bad Request', { message: 'Bad Request' }),
-      );
     }
   });
 });

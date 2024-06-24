@@ -10,6 +10,7 @@
         "simplr"
     ],
     "main": "dist/index.js",
+    "types": "index.d.ts",
     "repository": {
         "type": "git",
         "url": "https://github.com/uriielfl/simplr.git"
@@ -19,7 +20,8 @@
         "test": "jest",
         "test:coverage": "jest --coverage",
         "build": "tsc",
-        "minify": "node minify.js"
+        "minify": "node minify.js",
+        "format": "prettier --write \"src/**/*.{js,jsx,tsx,ts}\""
     },
     "author": "Uriel Francisco Libano",
     "license": "ISC",
@@ -28,16 +30,21 @@
     ],
     "devDependencies": {
         "@trivago/prettier-plugin-sort-imports": "^4.3.0",
+        "@types/eslint__js": "^8.42.3",
         "@types/jest": "^29.5.12",
-        "glob": "^10.3.12",
+        "@typescript-eslint/eslint-plugin": "^7.14.1",
+        "@typescript-eslint/parser": "^7.14.1",
+        "eslint": "^8.57.0",
+        "eslint-plugin-import": "^2.29.1",
         "jest": "^29.7.0",
         "nock": "^13.5.4",
-        "terser": "^5.31.0",
-        "ts-jest": "^29.1.4",
-        "typescript": "^5.4.5"
+        "prettier": "3.3.2",
+        "ts-jest": "^29.1.2",
+        "typescript": "^5.5.2"
     },
     "dependencies": {
         "@types/node": "^20.12.7",
-        "isomorphic-fetch": "^3.0.0"
+        "isomorphic-fetch": "^3.0.0",
+        "terser": "^5.31.1"
     }
 }

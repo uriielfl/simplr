@@ -1,6 +1,6 @@
-import { IRequestHeaders } from "./headers.interface";
+import { IRequestHeaders } from './headers.interface';
 
 export interface IRequestOptions {
-    headers?: IRequestHeaders;
-    body?: BodyInit | any;
+  headers?: IRequestHeaders;
+  body?: BodyInit | any;
 }

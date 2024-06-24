@@ -1,4 +1,4 @@
-import { StatusCodeGroupEnum } from '@/utils/enums/status-code-groups.enum';
+import { StatusCodeGroupEnum } from '../../utils/enums/status-code-groups.enum';
 
 export function getStatusCodeGroup(statusCode: number): StatusCodeGroupEnum {
   if (statusCode >= 100 && statusCode <= 199) {
