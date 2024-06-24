@@ -74,7 +74,7 @@ export class ResponseInterceptor {
     method: HttpMethodsEnum,
   ) {
     const interceptor = this.findInterceptors(path, method);
-    if (!!interceptor) {
+    if (interceptor) {
       if (interceptor.interception) {
         return await interceptor.interception(await req());
       }

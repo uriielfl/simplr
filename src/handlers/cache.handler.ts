@@ -8,7 +8,7 @@ const STORAGE_INDEX = 'simplr';
 export class SimplrCache {
   constructor() {}
 
-  set = async (key: string, value: any, ttl = 5000) => {
+  set = async (key: string, value: SimplrResponse, ttl = 5000) => {
     const cacheStorage = await caches.open(STORAGE_INDEX);
     const expirationDate = getExpirationDate(ttl);
     const dataToCache = JSON.stringify({ value, expirationDate });
@@ -29,7 +29,7 @@ export class SimplrCache {
     const { value, expirationDate } = cachedData;
 
     if (Date.now() > expirationDate) {
-      await cacheStorage.delete(key); 
+      await cacheStorage.delete(key);
       return null;
     }
     return value;
@@ -46,13 +46,13 @@ export class SimplrCache {
 
     let cacheData;
     if (cacheResponse) {
-      const responseData = await cacheResponse.json(); 
+      const responseData = await cacheResponse.json();
       cacheData = responseData;
     }
 
     if (cacheData && Date.now() > cacheData.expirationDate) {
       await cacheStorage.delete(key);
-      cacheData = null; 
+      cacheData = null;
     }
 
     if (cacheData) {

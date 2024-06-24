@@ -17,6 +17,7 @@ describe('Interceptor Validator', () => {
       'Cannot have both PATH and EXACT_PATH in by array',
     );
   });
+
   it('should throw an error if path is used without PATH or EXACT_PATH', () => {
     const config: IResponseInterceptor = {
       by: [InterceptorByEnum.METHOD],
@@ -28,6 +29,7 @@ describe('Interceptor Validator', () => {
       'Path must be used with PATH or EXACT_PATH',
     );
   });
+
   it('should throw an error if method is used without METHOD', () => {
     const config: IRequestInterceptor = {
       by: [InterceptorByEnum.PATH],
@@ -39,6 +41,7 @@ describe('Interceptor Validator', () => {
       'Method must be used with METHOD',
     );
   });
+
   it('should throw an error if params are used without PATH', () => {
     const config: IRequestInterceptor = {
       by: [InterceptorByEnum.METHOD],
@@ -50,6 +53,7 @@ describe('Interceptor Validator', () => {
       'Params must be used with PATH',
     );
   });
+
   it('should throw an error if params are not rightly formatted in the path', () => {
     const config: IRequestInterceptor = {
       by: [InterceptorByEnum.PATH],

@@ -64,5 +64,4 @@ describe('Post method model', () => {
       expect(error).toEqual(new Error('Network error'));
     }
   });
-
 });

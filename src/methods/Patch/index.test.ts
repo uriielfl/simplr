@@ -64,6 +64,4 @@ describe('Patch method model', () => {
       expect(error).toEqual(new Error('Network error'));
     }
   });
-
-
 });

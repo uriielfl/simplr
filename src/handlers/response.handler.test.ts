@@ -1,4 +1,3 @@
-import { getStatusCodeGroup } from '../utils/helpers/get-status-code-group';
 import { SimplrResponse } from './response.handler';
 
 describe('Response Handler', () => {

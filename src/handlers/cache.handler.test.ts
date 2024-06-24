@@ -1,4 +1,5 @@
 import { SimplrCache } from './cache.handler';
+import { SimplrResponse } from './response.handler';
 
 const mockCache = {
   put: jest.fn(),
@@ -22,17 +23,19 @@ describe('Cache', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
+
   it('should set a value in the cache', async () => {
     const cache = new SimplrCache();
     const key = 'testKey';
     const value = 'testValue';
     const ttl = 60;
-
-    await cache.set(key, value, ttl);
+    const rsp = new SimplrResponse(200, value, 'OK');
+    await cache.set(key, rsp, ttl);
 
     expect(global.caches.open).toHaveBeenCalledWith('simplr');
     expect(mockCache.put).toHaveBeenCalledWith(key, expect.any(Response));
   });
+
   it('should get a value from the cache', async () => {
     const cache = new SimplrCache();
     const key = 'testKey';
@@ -116,6 +119,7 @@ describe('Cache', () => {
     expect(request).toHaveBeenCalled();
     expect(mockCache.put).toHaveBeenCalledWith(`/${key}`, expect.any(Response));
   });
+
   it('should save cache for 5 seconds by default on listenAndCache', async () => {
     const cache = new SimplrCache();
 
@@ -133,6 +137,7 @@ describe('Cache', () => {
     expect(request).toHaveBeenCalled();
     expect(mockCache.put).toHaveBeenCalledWith(`/${key}`, expect.any(Response));
   });
+
   it('should remove cache by key', async () => {
     const cache = new SimplrCache();
 
@@ -151,7 +156,8 @@ describe('Cache', () => {
     expect(global.caches.open).toHaveBeenCalledWith('simplr');
     expect(mockCache.delete).toHaveBeenCalledWith(key);
   });
-  test('clear should delete all keys in the cache', async () => {
+
+  it('clear should delete all keys in the cache', async () => {
     const cache = new SimplrCache();
     const key = 'testKey';
     const value = 'testValue';
@@ -161,18 +167,20 @@ describe('Cache', () => {
     cacheStorage.keys = jest.fn().mockResolvedValueOnce([key]);
 
     mockCache.match.mockResolvedValueOnce(async () => [key]);
-    await cache.set(key, value, ttl);
+    const rsp = new SimplrResponse(200, value, 'OK');
+    await cache.set(key, rsp, ttl);
     await cache.clear();
     expect(cacheStorage.keys).toHaveBeenCalled();
     expect(cacheStorage.delete).toHaveBeenCalledTimes(1);
     expect(cacheStorage.delete).toHaveBeenCalledWith('testKey');
   });
+
   it('should save cache for 5 seconds by default on set', async () => {
     const cache = new SimplrCache();
     const key = 'testKey';
     const value = 'testValue';
-
-    await cache.set(key, value);
+    const rsp = new SimplrResponse(200, value, 'OK');
+    await cache.set(key, rsp);
 
     expect(global.caches.open).toHaveBeenCalledWith('simplr');
     expect(mockCache.put).toHaveBeenCalledWith(key, expect.any(Response));

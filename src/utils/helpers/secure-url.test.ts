@@ -20,9 +20,10 @@ describe('Secure URL helper', () => {
     const { URL } = secureUrl(url, '');
     expect(URL).toBe('http://myurl.com');
   });
+
   it('should not change protocol if it is already secure', () => {
     const url = 'https://myurl.com';
     const { URL } = secureUrl(url, '');
     expect(URL).toBe(url);
-  })
+  });
 });

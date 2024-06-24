@@ -72,6 +72,7 @@ describe('ResponseInterceptor', () => {
     expect(req).toHaveBeenCalled();
     expect(result).toBe('intercepted');
   });
+
   it('should run the correct interceptor if exact path matches', async () => {
     const interceptor = {
       by: [InterceptorByEnum.EXACT_PATH],
@@ -113,6 +114,7 @@ describe('ResponseInterceptor', () => {
     expect(req).toHaveBeenCalled();
     expect(result).toBe('original');
   });
+
   it('should run the correct interceptor if dynamic path matches', async () => {
     const interceptor = {
       by: [InterceptorByEnum.PATH],
@@ -156,7 +158,8 @@ describe('ResponseInterceptor', () => {
     expect(req).toHaveBeenCalled();
     expect(result).toBe('original');
   });
-  test('should return false if the path does not match the interceptor path and the interceptor is set to intercept by path', async () => {
+
+  it('should return false if the path does not match the interceptor path and the interceptor is set to intercept by path', async () => {
     const interceptor = new ResponseInterceptor();
     interceptor.add({
       path: '/test',
@@ -172,12 +175,13 @@ describe('ResponseInterceptor', () => {
 
     expect(result).toEqual({ data: 'test' });
   });
-  test('should run the interceptor and cache the result if cache is enabled but there is no cache data', async () => {
+
+  it('should run the interceptor and cache the result if cache is enabled but there is no cache data', async () => {
     const interceptor = new ResponseInterceptor();
     interceptor.add({
       path: '/test',
       by: [InterceptorByEnum.EXACT_PATH],
-      interception: async (req) => ({ data: 'intercepted' }),
+      interception: async () => ({ data: 'intercepted' }),
     });
 
     const result = await interceptor.runInterceptor(

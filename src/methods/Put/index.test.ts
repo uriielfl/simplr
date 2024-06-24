@@ -64,5 +64,4 @@ describe('Put method model', () => {
       expect(error).toEqual(new Error('Network error'));
     }
   });
-
 });

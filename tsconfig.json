@@ -10,5 +10,9 @@
     "esModuleInterop": true
   },
   "include": ["index.ts", "src/main.ts", "./src/**/*", "jest.config.js", "index.ts", "src/utils/helpers/secure-url.ts"], 
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules",
+    "**/*.test.ts",
+    "**/*.spec.ts"
+  ]
 }

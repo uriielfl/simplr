@@ -9,7 +9,7 @@ function walkDir(dir, callback) {
     isDirectory ? 
       walkDir(dirPath, callback) : callback(path.join(dir, f));
   });
-};
+}
 
 walkDir('dist/src', function(filePath) {
   if (path.extname(filePath) === '.js') {

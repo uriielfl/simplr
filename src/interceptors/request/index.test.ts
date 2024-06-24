@@ -48,6 +48,7 @@ describe('RequestInterceptor', () => {
     expect(interceptorOptions1.interception).toHaveBeenCalledWith(config);
     expect(interceptorOptions2.interception).not.toHaveBeenCalled();
   });
+
   it('should match only exact path', () => {
     const interceptorOptions = {
       by: [InterceptorByEnum.EXACT_PATH],
@@ -128,6 +129,7 @@ describe('RequestInterceptor', () => {
 
     expect(interceptorOptions.interception).not.toHaveBeenCalled();
   });
+
   it('should match only path ', () => {
     const interceptorOptions = {
       by: [InterceptorByEnum.PATH],
