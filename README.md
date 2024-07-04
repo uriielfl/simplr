@@ -6,7 +6,7 @@
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 ![Jest](https://img.shields.io/badge/-jest-%23C21325?style=for-the-badge&logo=jest&logoColor=white)
 
-[![Coverage Status](https://coveralls.io/repos/github/uriielfl/lightie-request/badge.svg)](https://coveralls.io/github/uriielfl/lightie-request)
+[![Coverage Status](https://coveralls.io/repos/github/uriielfl/simplr/badge.svg?branch=main)](https://coveralls.io/github/uriielfl/simplr?branch=main)
 
 Simplr is a streamlined browser HTTP client library for JavaScript, designed to simplify the use of HTTP methods such as GET, POST, PATCH, PUT, and DELETE. It offers advanced features like request and response interceptors, and cache manipulation, making web development tasks more manageable.
 
