@@ -1,3 +1,4 @@
+import 'isomorphic-fetch';
 import { SimplrResponse } from './response.handler';
 
 describe('Response Handler', () => {
