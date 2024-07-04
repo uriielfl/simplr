@@ -28,7 +28,7 @@ describe('Cache', () => {
     const cache = new SimplrCache();
     const key = 'testKey';
     const value = 'testValue';
-    const ttl = 60;
+    const ttl = { seconds: 60};
     const rsp = new SimplrResponse(200, value, 'OK');
     await cache.set(key, rsp, ttl);
 
@@ -40,11 +40,11 @@ describe('Cache', () => {
     const cache = new SimplrCache();
     const key = 'testKey';
     const value = 'testValue';
-    const ttl = 60;
+    const ttl = { seconds: 60};
 
     mockCache.match.mockResolvedValueOnce({
       ok: true,
-      json: async () => ({ value, expirationDate: Date.now() + ttl * 1000 }),
+      json: async () => ({ value, expirationDate: Date.now() + ttl.seconds * 1000 }),
     });
 
     const result = await cache.get(key);
@@ -161,7 +161,7 @@ describe('Cache', () => {
     const cache = new SimplrCache();
     const key = 'testKey';
     const value = 'testValue';
-    const ttl = 60;
+    const ttl = { seconds: 60};
     const cacheStorage = await caches.open('simplr');
 
     cacheStorage.keys = jest.fn().mockResolvedValueOnce([key]);
