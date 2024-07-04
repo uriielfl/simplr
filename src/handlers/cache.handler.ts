@@ -8,9 +8,11 @@ const STORAGE_INDEX = 'simplr';
 export class SimplrCache {
   constructor() {}
 
-  set = async (key: string, value: SimplrResponse, ttl = 5000) => {
+  set = async (key: string, value: SimplrResponse,     expirestAt: IExpiresAt = { minutes: 5 },) => {
     const cacheStorage = await caches.open(STORAGE_INDEX);
-    const expirationDate = getExpirationDate(ttl);
+
+    const expirationInMs = convertTimeToMiliseconds(expirestAt);
+    const expirationDate = getExpirationDate(expirationInMs);
     const dataToCache = JSON.stringify({ value, expirationDate });
     const response = new Response(dataToCache, {
       headers: { 'Content-Type': 'application/json' },

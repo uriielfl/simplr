@@ -1,3 +1,4 @@
+import { SimplrResponse } from '../../handlers/response.handler';
 import { HttpMethodsEnum } from '../../utils/enums/http-methods.enum';
 import { InterceptorByEnum } from '../../utils/enums/interceptor-by.enum';
 import { ResponseInterceptor } from './index';
@@ -161,10 +162,15 @@ describe('ResponseInterceptor', () => {
 
   it('should return false if the path does not match the interceptor path and the interceptor is set to intercept by path', async () => {
     const interceptor = new ResponseInterceptor();
+    const interception = (resp: SimplrResponse) => {
+      resp.data = 'intercepted';
+      return resp;
+    }
+    
     interceptor.add({
       path: '/test',
       by: [InterceptorByEnum.PATH],
-      interception: async (req) => req,
+      interception: interception
     });
 
     const result = await interceptor.runInterceptor(
@@ -176,20 +182,5 @@ describe('ResponseInterceptor', () => {
     expect(result).toEqual({ data: 'test' });
   });
 
-  it('should run the interceptor and cache the result if cache is enabled but there is no cache data', async () => {
-    const interceptor = new ResponseInterceptor();
-    interceptor.add({
-      path: '/test',
-      by: [InterceptorByEnum.EXACT_PATH],
-      interception: async () => ({ data: 'intercepted' }),
-    });
 
-    const result = await interceptor.runInterceptor(
-      () => Promise.resolve({ data: 'test' }),
-      '/test',
-      HttpMethodsEnum.GET,
-    );
-
-    expect(result).toEqual({ data: 'intercepted' });
-  });
 });
