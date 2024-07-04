@@ -1,4 +1,4 @@
 export interface ICacheOptions {
-    cacheResponse?: boolean;
-    expiresAt?: number;
+  cacheResponse?: boolean;
+  expiresAt?: number;
 }

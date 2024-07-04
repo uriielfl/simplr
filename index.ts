@@ -1,4 +1,4 @@
-export { simplr } from './src/main';
+export { simplr, Simplr } from './src/main';
 
 // ENUMS
 export {InterceptorByEnum} from './src/utils/enums/interceptor-by.enum';

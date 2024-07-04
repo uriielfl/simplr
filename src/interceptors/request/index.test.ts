@@ -1,6 +1,6 @@
-import { RequestInterceptor } from './index';
 import { HttpMethodsEnum } from '../../utils/enums/http-methods.enum';
 import { InterceptorByEnum } from '../../utils/enums/interceptor-by.enum';
+import { RequestInterceptor } from './index';
 
 describe('RequestInterceptor', () => {
   let interceptor: RequestInterceptor;
@@ -48,6 +48,7 @@ describe('RequestInterceptor', () => {
     expect(interceptorOptions1.interception).toHaveBeenCalledWith(config);
     expect(interceptorOptions2.interception).not.toHaveBeenCalled();
   });
+
   it('should match only exact path', () => {
     const interceptorOptions = {
       by: [InterceptorByEnum.EXACT_PATH],
@@ -70,7 +71,7 @@ describe('RequestInterceptor', () => {
 
   it('should not match exact path', () => {
     const interceptorOptions = {
-      by: [InterceptorByEnum.EXACT_PATH, InterceptorByEnum.METHOD ],
+      by: [InterceptorByEnum.EXACT_PATH, InterceptorByEnum.METHOD],
       path: '/test',
       methods: [HttpMethodsEnum.GET],
       interception: jest.fn(),
@@ -92,7 +93,7 @@ describe('RequestInterceptor', () => {
     const interceptorOptions = {
       by: [InterceptorByEnum.PATH, InterceptorByEnum.METHOD],
       path: '/test/{id}',
-      params:['id'],
+      params: ['id'],
       methods: [HttpMethodsEnum.GET],
       interception: jest.fn(),
     };
@@ -121,14 +122,14 @@ describe('RequestInterceptor', () => {
     interceptor.add(interceptorOptions);
 
     const config = {
-      
-    path: '/test/123',
-    method: HttpMethodsEnum.GET,
+      path: '/test/123',
+      method: HttpMethodsEnum.GET,
     };
     interceptor.runInterceptor(config);
 
     expect(interceptorOptions.interception).not.toHaveBeenCalled();
   });
+
   it('should match only path ', () => {
     const interceptorOptions = {
       by: [InterceptorByEnum.PATH],
