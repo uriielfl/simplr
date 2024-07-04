@@ -4,7 +4,7 @@
     "bugs": {
         "url": "https://github.com/uriielfl/simplr/issues"
     },
-    "version": "1.0.4",
+    "version": "1.0.5",
     "description": "make requests client-side cacheable requests with ease",
     "keywords": [
         "http",
