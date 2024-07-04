@@ -1,3 +1,4 @@
+import 'isomorphic-fetch';
 import { SimplrCache } from './cache.handler';
 import { SimplrResponse } from './response.handler';
 
