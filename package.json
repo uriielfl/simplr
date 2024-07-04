@@ -1,6 +1,10 @@
 {
-    "name": "simplr",
-    "version": "1.0.0",
+    "name": "simplr-js",
+    "homepage": "https://simplrjs.tech/",
+    "bugs": {
+        "url": "https://github.com/uriielfl/simplr/issues"
+    },
+    "version": "1.0.5",
     "description": "make requests client-side cacheable requests with ease",
     "keywords": [
         "http",
@@ -10,10 +14,10 @@
         "simplr"
     ],
     "main": "dist/index.js",
-    "types": "index.d.ts",
+    "types": "dist/index.d.ts",
     "repository": {
         "type": "git",
-        "url": "https://github.com/uriielfl/simplr.git"
+        "url": "https://github.com/uriielfl/simplr"
     },
     "scripts": {
         "start": "npx tsc && node dist/src/index.js",
